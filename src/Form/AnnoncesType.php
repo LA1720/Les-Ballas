@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 
 class AnnoncesType extends AbstractType
 {
@@ -26,7 +26,7 @@ class AnnoncesType extends AbstractType
                 'attr' => array('checked'),
             ])
             ->add('prix', IntegerType::class)
-            ->add('content', TextareaType::class)
+            ->add('content', CKEditorType::class)
             ->add('categories', EntityType::class, [
                 'class' => Categories::class 
             ])
