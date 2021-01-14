@@ -86,15 +86,14 @@ class UsersController extends AbstractController
 
             $user= $this->getUser();
 //Si Les deux mots de passe sont identiques 
-            if ($request->request->get('pass') == $request->request->get('pass2')) {
+            if ($request->request->get('pass') == $request->request->get('pass2')){
                 $user->setPassword($passwordEncoder->encodePassword($user, $request->request->get('pass')));
                 $em->flush();
                 $this->addFlash('message', 'Mot de passe mis à jour avec succès');
 
                 return $this->redirectToRoute('users');
-
             } else {
-                $this->addFlash('error', 'Les deux mots de passe ne sont pas identiques');
+                // $this->addFlash('error', 'Les deux mots de passe ne sont pas identiques');
             }   
         }
         return $this->render('users/editpass.html.twig');
