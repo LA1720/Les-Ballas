@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Annonces;
 use App\Form\AnnoncesType;
+use App\Form\EditProfileType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -43,6 +44,32 @@ class UsersController extends AbstractController
         }
 
         return $this->render('users/annonces/ajout.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+        /**
+     * @Route("/users/profil/modifier", name="users_profil_modifier")
+     */
+    public function editProfile(Request $request)
+    {
+        $user = $this->getUser();
+        $form = $this->createForm(EditProfileType::class, $this->getUser());
+        
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+
+
+            $em=$this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            $this->addFlash('message', 'Profil mis à jour');   
+        return $this->redirectToRoute('users');    
+        }
+
+        return $this->render('users/editprofile.html.twig', [
             'form' => $form->createView()
         ]);
     }
