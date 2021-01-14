@@ -59,6 +59,7 @@ class Users implements UserInterface
      */
     private $firstname;
   
+    /**
      * @ORM\ManyToMany(targetEntity=Annonces::class, mappedBy="favoris")
      */
     private $favoris;
@@ -195,9 +196,10 @@ class Users implements UserInterface
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(string $name)
     {
         $this->name = $name;
+    }
       
     /**
      * @return Collection|Annonces[]
@@ -222,11 +224,12 @@ class Users implements UserInterface
         return $this->firstname;
     }
 
-    public function setFirstname(string $firstname): self
+    public function setFirstname(string $firstname)
     {
         $this->firstname = $firstname;
+    }
       
-    public function removeFavori(Annonces $favori): self
+    public function removeFavori(Annonces $favori)
     {
         if ($this->favoris->removeElement($favori)) {
             $favori->removeFavori($this);
