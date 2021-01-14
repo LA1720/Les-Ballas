@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use App\Entity\Annonces;
 
 /**
  * @ORM\Entity(repositoryClass=UsersRepository::class)
@@ -49,6 +50,15 @@ class Users implements UserInterface
     private $annonces;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $name;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $firstname;
+  
      * @ORM\ManyToMany(targetEntity=Annonces::class, mappedBy="favoris")
      */
     private $favoris;
@@ -179,6 +189,16 @@ class Users implements UserInterface
         return $this;
     }
 
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+      
     /**
      * @return Collection|Annonces[]
      */
@@ -197,6 +217,15 @@ class Users implements UserInterface
         return $this;
     }
 
+    public function getFirstname(): ?string
+    {
+        return $this->firstname;
+    }
+
+    public function setFirstname(string $firstname): self
+    {
+        $this->firstname = $firstname;
+      
     public function removeFavori(Annonces $favori): self
     {
         if ($this->favoris->removeElement($favori)) {
