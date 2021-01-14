@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,12 +17,24 @@ class SearchAnnonceType extends AbstractType
             ->add('mots', SearchType::class, [
                 'label' => false,
                 'attr' => [
-                        'class' => 'form-controm',
-                        'placeholder' => 'Entrez un ou plusieurs mots-clés'
+                    'class' => 'form-controm',
+                    'placeholder' => 'Entrez un ou plusieurs mots-clés'
+                ],
+                'required' => false
+            ])
+            ->add('categorie', EntityType::class, [
+                'class' => Categories::class,
+                'label' => false,
+                'attr' => [
+                    'class' => 'form-controm',
+                    'placeholder' => 'Entrez un ou plusieurs mots-clés'
                 ]
             ])
-            ->add('Recherchez', SubmitType::class)
-        ;
+            ->add('Recherchez', SubmitType::class, [
+                'attr' => [
+                    'class' => 'btn primary',
+                ]
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
