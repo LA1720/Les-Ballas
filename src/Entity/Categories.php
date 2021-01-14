@@ -2,10 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\CategoriesRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\Annonces;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\CategoriesRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+
+
 
 /**
  * @ORM\Entity(repositoryClass=CategoriesRepository::class)
@@ -24,9 +27,10 @@ class Categories
      */
     private $name;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    /** 
+    * @Gedmo\Mapping\Annotation\Slug(fields={"name"})
+    * @ORM\Column(name="slug", type="string", length=255, nullable=true, unique=true)
+    */
     private $slug;
 
     /**
@@ -55,6 +59,11 @@ class Categories
         $this->annonces = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->name;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -77,12 +86,7 @@ class Categories
         return $this->slug;
     }
 
-    public function setSlug(string $slug): self
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
+   
 
     public function getColor(): ?string
     {
