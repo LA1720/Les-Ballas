@@ -24,7 +24,7 @@ class AnnoncesRepository extends ServiceEntityRepository
  *
  * @return void
  */
-    public function search($mots){
+    public function search($mots = null, $categorie = null){
         $query = $this->createQueryBuilder('a');
         $query->where('a.active = 1');
         if($mots != null){
@@ -32,7 +32,12 @@ class AnnoncesRepository extends ServiceEntityRepository
             (:mots boolean)>0')
                 ->setParameter('mots', $mots);
         }
+        if($categorie != null){
+            $query->leftjoin('a.categories', 'c');
+            $query->andWhere('c.id = :id')->setParameter('id', $categorie);
 
+        }
+        
         return $query->getQuery()->getResult();
     }
 
